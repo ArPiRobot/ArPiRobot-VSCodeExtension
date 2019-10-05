@@ -1,0 +1,3 @@
+
+export const settings_json: any = "{\n\"python.jediEnabled\": true\n}\n"
+export const robot_py: string = "from arpirobot.core.robot import BaseRobot\n\n\nclass Robot(BaseRobot):\n    def __init__(self):\n        super().__init__()\n\n    def robot_started(self):\n        pass\n    \n    def periodic(self):\n        self.feed_watchdog()\n\n    def robot_enabled(self):\n        pass\n    \n    def robot_disabled(self):\n        pass\n\n\n\nrobot = Robot()\nrobot.start()\n"
