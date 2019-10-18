@@ -41,10 +41,8 @@ const createProject = async() => {
 
 					// Create folders
 					fs.mkdirSync(filePath);
-					fs.mkdirSync(path.join(filePath, ".vscode"));
 
 					// Write files
-					fs.writeFileSync(path.join(filePath, ".vscode", "settings.json"), contents.settings_json);
 					fs.writeFileSync(path.join(filePath, "robot.py"), contents.robot_py);
 
 					// Open created project
