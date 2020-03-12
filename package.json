@@ -2,7 +2,7 @@
 	"name": "arpirobot",
 	"displayName": "ArPiRobot",
 	"description": "VSCode Integration for ArPiRobot development",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"engines": {
 		"vscode": "^1.38.0"
 	},
@@ -10,7 +10,8 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:arpirobot.createProject"
+		"onCommand:arpirobot.createProject",
+		"onCommand:arpirobot.updateDevEnv"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -18,6 +19,10 @@
 			{
 				"command": "arpirobot.createProject",
 				"title": "Create ArPiRobot Project"
+			},
+			{
+				"command": "arpirobot.updateDevEnv",
+				"title": "Install ArPiRobot Update (for currently selected python version)"
 			}
 		]
 	},
@@ -33,11 +38,16 @@
 		"@types/mocha": "^5.2.6",
 		"@types/node": "^10.12.21",
 		"@types/vscode": "^1.38.0",
+		"@types/adm-zip": "0.4.31",
+		"@types/tmp": "0.0.33",
+		"child-process": "1.0.2",
+		"tmp": "0.1.0",
+		"adm-zip": "0.4.14",
 		"glob": "^7.1.4",
 		"mocha": "^6.1.4",
 		"typescript": "^3.3.1",
 		"tslint": "^5.12.1",
 		"vscode-test": "^1.2.0"
 	},
-    "publisher": "marcusbehel"
+	"publisher": "marcusbehel"
 }
