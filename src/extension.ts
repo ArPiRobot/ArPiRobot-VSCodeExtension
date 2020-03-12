@@ -185,6 +185,12 @@ const startUpdate = async(pythonPath: string) => {
 				});
 				p.then(value => {
 					window.showInformationMessage("ArPiRobot update installed successfully.");
+
+					window.showWarningMessage("Need to reload window for changes to take effect. Reload now?", "Yes", "No").then(res => {
+						if(res === "Yes"){
+							vscode.commands.executeCommand("workbench.action.reloadWindow");
+						}
+					});
 				});
 				p.catch(value => {
 					window.showErrorMessage("Failed to install ArPiRobot update: " + value);
