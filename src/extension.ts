@@ -31,6 +31,7 @@ const projectNameInputboxOpts: vscode.InputBoxOptions = {
 };
 
 const createProject = async() => {
+	window.showInformationMessage("Pick folder to create project in (project will be in subfolder)");
 	window.showOpenDialog(projectFolderSelectOpts).then(res => {
 		if(res && res[0]){
 			let projPath = res[0].fsPath;
@@ -41,18 +42,29 @@ const createProject = async() => {
 					var filePath = path.join(projPath, projName);
 					
 					if(fs.existsSync(filePath)){
-						vscode.window.showErrorMessage("A folder with that project name already exists!");
+						vscode.window.showErrorMessage("A folder with that project name already exists in the selected directory!");
 						return;
 					}
 
-					// Create folders
-					fs.mkdirSync(filePath);
+					let eventOpt = "Event Based Robot Project (Recommended)";
+					let periodicOpt = "Periodic Robot Project";
+					window.showQuickPick([eventOpt, periodicOpt]).then(res => {
+						let fileContents = "";
+						if(res === eventOpt){
+							fileContents = contents.robot_py_event;
+						}else{
+							fileContents = contents.robot_py_periodic;
+						}
 
-					// Write files
-					fs.writeFileSync(path.join(filePath, "robot.py"), contents.robot_py);
+						// Create folders
+						fs.mkdirSync(filePath);
 
-					// Open created project
-					vscode.commands.executeCommand("vscode.openFolder", vscode.Uri.file(filePath))
+						// Write files
+						fs.writeFileSync(path.join(filePath, "robot.py"), fileContents);
+
+						// Open created project
+						vscode.commands.executeCommand("vscode.openFolder", vscode.Uri.file(filePath));
+					});
 				}
 			});
 		}
