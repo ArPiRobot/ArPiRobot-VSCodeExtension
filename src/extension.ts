@@ -174,13 +174,13 @@ const startUpdate = async(pythonPath: string) => {
 							console.log("Error: " + err);
 							reject("Unable to execute pip install deps command. Make sure the selected python version is supported and make sure you have internet access.");
 						}
-						progress.report({message: "Installing ArPiRobot Update - Installing pythonlib"});
+						progress.report({message: "Installing pythonlib"});
 						cp.exec(pythonPath + ' -m pip install "' + pyLibExtractDir + '"', (err, stdout, stderr) => {
 							if(err){
 								console.log("Error: " + err);
 								reject("Unable to install python library. Make sure the selected python version is supported.");
 							}
-							progress.report({message: "Installing ArPiRobot Update - Done"});
+							progress.report({message: "Done"});
 							// Finished install
 							resolve();
 						});
