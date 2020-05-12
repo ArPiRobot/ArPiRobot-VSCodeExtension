@@ -120,7 +120,7 @@ const startUpdate = async(pythonPath: string) => {
 				var p = new Promise((resolve, reject) => {
 
 					// Create a directory to extract the update zip to
-					progress.report({message: "Installing ArPiRobot Update - Preparing working directory"});		
+					progress.report({message: "Preparing working directory"});		
 					let mainExtractDir = "";
 					try{
 						let tempObj = tmp.dirSync({prefix: "ArPiRobotUpdate_"});
@@ -131,7 +131,7 @@ const startUpdate = async(pythonPath: string) => {
 					}
 
 					// Extract zip
-					progress.report({message: "Installing ArPiRobot Update - Extracting update zip"});
+					progress.report({message: "Extracting update zip"});
 					
 					try{
 						let zip = new AdmZip(updatePath);
@@ -142,7 +142,7 @@ const startUpdate = async(pythonPath: string) => {
 					}
 
 					// Extract the pythonlib zip
-					progress.report({message: "Installing ArPiRobot Update - Extracting pythonlib zip"});
+					progress.report({message: "Extracting pythonlib zip"});
 					let pyLibExtractDir = path.join(mainExtractDir, "pythonlib");
 					try{
 						let pylibZipPath = path.join(mainExtractDir, "pythonlib.zip");
@@ -168,7 +168,7 @@ const startUpdate = async(pythonPath: string) => {
 					// Run install commands
 
 					// Run pip to install dependencies
-					progress.report({message: "Installing ArPiRobot Update - Installing pythonlib dependencies"});
+					progress.report({message: "Installing pythonlib dependencies"});
 					cp.exec(pythonPath + ' -m pip install -r "' + path.join(pyLibExtractDir, "requirements.txt") + '"', (err, stdout, stderr) => {
 						if(err){
 							console.log("Error: " + err);
