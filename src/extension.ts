@@ -46,25 +46,16 @@ const createProject = async() => {
 						return;
 					}
 
-					let eventOpt = "Event Based Robot Project (Recommended)";
-					let periodicOpt = "Periodic Robot Project";
-					window.showQuickPick([eventOpt, periodicOpt]).then(res => {
-						let fileContents = "";
-						if(res === eventOpt){
-							fileContents = contents.robot_py_event;
-						}else{
-							fileContents = contents.robot_py_periodic;
-						}
+					// Create folders
+					fs.mkdirSync(filePath);
 
-						// Create folders
-						fs.mkdirSync(filePath);
+					// Write files
+					fs.writeFileSync(path.join(filePath, "robot.py"), contents.robot_py);
+					fs.writeFileSync(path.join(filePath, "robot_objects.py"), contents.robot_objects_py);
+					fs.writeFileSync(path.join(filePath, "robot_actions.py"), contents.robot_actions_py);
 
-						// Write files
-						fs.writeFileSync(path.join(filePath, "robot.py"), fileContents);
-
-						// Open created project
-						vscode.commands.executeCommand("vscode.openFolder", vscode.Uri.file(filePath));
-					});
+					// Open created project
+					vscode.commands.executeCommand("vscode.openFolder", vscode.Uri.file(filePath));
 				}
 			});
 		}
