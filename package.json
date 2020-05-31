@@ -2,7 +2,7 @@
 	"name": "arpirobot",
 	"displayName": "ArPiRobot",
 	"description": "VSCode Integration for ArPiRobot development",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"engines": {
 		"vscode": "^1.38.0"
 	},
@@ -18,7 +18,7 @@
 		"commands": [
 			{
 				"command": "arpirobot.createProject",
-				"title": "Create ArPiRobot Project"
+				"title": "Create ArPiRobot PythonLib Project"
 			},
 			{
 				"command": "arpirobot.updateDevEnv",
