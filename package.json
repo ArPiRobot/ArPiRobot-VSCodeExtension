@@ -10,19 +10,18 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:arpirobot.createProject",
-		"onCommand:arpirobot.updateDevEnv"
+		"*"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
 				"command": "arpirobot.createProject",
-				"title": "Create ArPiRobot PythonLib Project"
+				"title": "ArPiRobot - Create PythonLib Project"
 			},
 			{
 				"command": "arpirobot.updateDevEnv",
-				"title": "Install ArPiRobot Update (for currently selected python version)"
+				"title": "ArPiRobot - Install Update (for currently selected python version)"
 			}
 		]
 	},

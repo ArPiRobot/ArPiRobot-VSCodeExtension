@@ -7,12 +7,27 @@ import { OpenDialogOptions, Uri, window } from "vscode";
 import * as cp from 'child_process';
 import * as tmp from 'tmp';
 
+let sbitem: vscode.StatusBarItem;
+
 export function activate(context: vscode.ExtensionContext) {
 	let createProjectCommand = vscode.commands.registerCommand('arpirobot.createProject', createProject);
 	context.subscriptions.push(createProjectCommand);
 
 	let updateDevEnvironmentCommand = vscode.commands.registerCommand('arpirobot.updateDevEnv', updateDevEnv);
 	context.subscriptions.push(updateDevEnvironmentCommand);
+
+	let openArPiRobotCommands = vscode.commands.registerCommand('arpirobot.openArPiRobotCommands', () => {
+		vscode.commands.executeCommand('workbench.action.quickOpen', '>ArPiRobot');
+	});
+	context.subscriptions.push(openArPiRobotCommands);
+
+	// 101 is enough priority that it is to the left of the python status bar item
+	sbitem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 101);
+	context.subscriptions.push(sbitem);
+
+	sbitem.command = 'arpirobot.openArPiRobotCommands';
+	sbitem.text = "ArPiRobot";
+	sbitem.show();
 }
 
 export function deactivate() {
@@ -27,39 +42,68 @@ const projectFolderSelectOpts: OpenDialogOptions = {
 };
 
 const projectNameInputboxOpts: vscode.InputBoxOptions = {
-	placeHolder: "Project Name"
+	placeHolder: "Project Name",
+	prompt: "Choose the Project Name. This will also be the name of the Project Folder."
 };
 
+let selectParentFolderItem: vscode.QuickPickItem = {
+	label: "Choose Parent Folder",
+	description: "Click here to select which directory the Project Folder should be created in."
+};
+let cancelItem: vscode.QuickPickItem = {
+	label: "Cancel"
+};
+
+
 const createProject = async() => {
-	window.showInformationMessage("Pick folder to create project in (project will be in subfolder)");
-	window.showOpenDialog(projectFolderSelectOpts).then(res => {
-		if(res && res[0]){
-			let projPath = res[0].fsPath;
-			// Prompt for project name
-			window.showInputBox(projectNameInputboxOpts).then(res => {
-				if (res){
-					let projName = res;
-					var filePath = path.join(projPath, projName);
-					
-					if(fs.existsSync(filePath)){
-						vscode.window.showErrorMessage("A folder with that project name already exists in the selected directory!");
-						return;
-					}
 
-					// Create folders
-					fs.mkdirSync(filePath);
+	// Show input box asking for project name
+	let projName = await window.showInputBox(projectNameInputboxOpts);
 
-					// Write files
-					fs.writeFileSync(path.join(filePath, "robot.py"), contents.robot_py);
-					fs.writeFileSync(path.join(filePath, "robot_objects.py"), contents.robot_objects_py);
-					fs.writeFileSync(path.join(filePath, "robot_actions.py"), contents.robot_actions_py);
+	if(!projName){
+		window.showInformationMessage("Canceled project creation.");
+		return;
+	}
 
-					// Open created project
-					vscode.commands.executeCommand("vscode.openFolder", vscode.Uri.file(filePath));
-				}
-			});
-		}
-	});
+	// Show quick pick dialog with a single "Choose Parent Folder" button and a description
+	
+	let choice = await window.showQuickPick([selectParentFolderItem, cancelItem]);
+	
+	if(choice === cancelItem){
+		window.showInformationMessage("Canceled project creation.");
+		return;
+	}
+	
+
+	let projFolderChoice = await window.showOpenDialog(projectFolderSelectOpts);
+
+	if(!projFolderChoice || !projFolderChoice[0]){
+		window.showInformationMessage("No parent folder selected. Canceled project creation.");
+		return;
+	}
+
+	let projPath = projFolderChoice[0].fsPath;
+	window.showInformationMessage(`Will create in ${projPath}`);
+
+	var filePath = path.join(projPath, projName);
+
+	if(fs.existsSync(filePath)){
+		vscode.window.showErrorMessage("A folder with that project name already exists in the selected directory!");
+		return;
+	}
+
+	// Create folders
+	fs.mkdirSync(filePath);
+	fs.mkdirSync(path.join(filePath, ".vscode"));
+
+	// Write files
+	fs.writeFileSync(path.join(filePath, "robot.py"), contents.robot_py);
+	fs.writeFileSync(path.join(filePath, "robot_objects.py"), contents.robot_objects_py);
+	fs.writeFileSync(path.join(filePath, "robot_actions.py"), contents.robot_actions_py);
+	fs.writeFileSync(path.join(filePath, ".vscode", "settings.json"), contents.vscode_settings_json);
+
+	// Open created project
+	vscode.commands.executeCommand("vscode.openFolder", vscode.Uri.file(filePath));
 };
 
 const updateSelectOptions: OpenDialogOptions = {
