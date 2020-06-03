@@ -16,6 +16,8 @@ export function activate(context: vscode.ExtensionContext) {
 	let updateDevEnvironmentCommand = vscode.commands.registerCommand('arpirobot.updateDevEnv', updateDevEnv);
 	context.subscriptions.push(updateDevEnvironmentCommand);
 
+	let createJavaProjectCommand = vscode.commands.registerCommand('arpirobot.createJavaProject', createJavaProj);
+
 	let openArPiRobotCommands = vscode.commands.registerCommand('arpirobot.openArPiRobotCommands', () => {
 		vscode.commands.executeCommand('workbench.action.quickOpen', '>ArPiRobot');
 	});
@@ -103,6 +105,70 @@ const createProject = async() => {
 	fs.writeFileSync(path.join(filePath, "main.sh"), contents.main_sh);
 	fs.writeFileSync(path.join(filePath, "main.py"), contents.main_py);
 	fs.writeFileSync(path.join(filePath, ".vscode", "settings.json"), contents.vscode_settings_json);
+
+	// Open created project
+	vscode.commands.executeCommand("vscode.openFolder", vscode.Uri.file(filePath));
+};
+
+const createJavaProj = async() => {
+
+	// Show input box asking for project name
+	let projName = await window.showInputBox(projectNameInputboxOpts);
+
+	if(!projName){
+		window.showInformationMessage("Canceled project creation.");
+		return;
+	}
+
+	// Show quick pick dialog with a single "Choose Parent Folder" button and a description
+	
+	let choice = await window.showQuickPick([selectParentFolderItem, cancelItem]);
+	
+	if(choice === cancelItem){
+		window.showInformationMessage("Canceled project creation.");
+		return;
+	}
+	
+
+	let projFolderChoice = await window.showOpenDialog(projectFolderSelectOpts);
+
+	if(!projFolderChoice || !projFolderChoice[0]){
+		window.showInformationMessage("No parent folder selected. Canceled project creation.");
+		return;
+	}
+
+	let projPath = projFolderChoice[0].fsPath;
+	window.showInformationMessage(`Will create in ${projPath}`);
+
+	var filePath = path.join(projPath, projName);
+
+	if(fs.existsSync(filePath)){
+		vscode.window.showErrorMessage("A folder with that project name already exists in the selected directory!");
+		return;
+	}
+
+	// Create folders
+	fs.mkdirSync(filePath);
+	fs.mkdirSync(path.join(filePath, "gradle"));
+	fs.mkdirSync(path.join(filePath, "gradle", "wrapper"));
+	fs.mkdirSync(path.join(filePath, "src"));
+	fs.mkdirSync(path.join(filePath, "src", "main"));
+	fs.mkdirSync(path.join(filePath, "src", "main", "java"));
+	fs.mkdirSync(path.join(filePath, "src", "main", "resources"));
+	fs.mkdirSync(path.join(filePath, "proj_folder"));
+
+	// Write files
+	fs.writeFileSync(path.join(filePath, "gradle", "wrapper", "gradle-wrapper.jar"), contents.gradle_wrapper_jar);
+	fs.writeFileSync(path.join(filePath, "gradle", "wrapper", "gradle-wrapper.properties"), contents.gradle_wrapper_prop);
+	fs.writeFileSync(path.join(filePath, "proj_folder", "main.sh"), contents.proj_main_sh);
+	fs.writeFileSync(path.join(filePath, "src", "main", "java", "Main.java"), contents.main_java);
+	fs.writeFileSync(path.join(filePath, "src", "main", "java", "Robot.java"), contents.robot_java);
+	fs.writeFileSync(path.join(filePath, "src", "main", "java", "RobotObjects.java"), contents.robot_objects_java);
+	fs.writeFileSync(path.join(filePath, "src", "main", "java", "RobotActions.java"), contents.robot_actions_java);
+	fs.writeFileSync(path.join(filePath, "build.gradle"), contents.build_gradle);
+	fs.writeFileSync(path.join(filePath, "gradlew"), contents.gradlew);
+	fs.writeFileSync(path.join(filePath, "gradlew.bat"), contents.gradlew_bat);
+	fs.writeFileSync(path.join(filePath, "settings.gradle"), contents.settings_gradle.replace("@PROJ_NAME@", projName));
 
 	// Open created project
 	vscode.commands.executeCommand("vscode.openFolder", vscode.Uri.file(filePath));

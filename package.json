@@ -22,6 +22,10 @@
 			{
 				"command": "arpirobot.updateDevEnv",
 				"title": "ArPiRobot - Install Update (for currently selected python version)"
+			},
+			{
+				"command": "arpirobot.createJavaProject",
+				"title": "ArPiRobot - Create JavaLibProject"
 			}
 		]
 	},
