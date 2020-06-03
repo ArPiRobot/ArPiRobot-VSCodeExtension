@@ -100,6 +100,8 @@ const createProject = async() => {
 	fs.writeFileSync(path.join(filePath, "robot.py"), contents.robot_py);
 	fs.writeFileSync(path.join(filePath, "robot_objects.py"), contents.robot_objects_py);
 	fs.writeFileSync(path.join(filePath, "robot_actions.py"), contents.robot_actions_py);
+	fs.writeFileSync(path.join(filePath, "main.sh"), contents.main_sh);
+	fs.writeFileSync(path.join(filePath, "main.py"), contents.main_py);
 	fs.writeFileSync(path.join(filePath, ".vscode", "settings.json"), contents.vscode_settings_json);
 
 	// Open created project
