@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as util from "util";
 import AdmZip = require('adm-zip')
 import * as contents from './contents';
 import { OpenDialogOptions, Uri, window } from "vscode";
@@ -8,6 +9,8 @@ import * as cp from 'child_process';
 import * as tmp from 'tmp';
 
 let sbitem: vscode.StatusBarItem;
+let logOutput = vscode.window.createOutputChannel("ArPiRobot");
+let terminal: vscode.Terminal | null = null;
 
 export function activate(context: vscode.ExtensionContext) {
 	let createProjectCommand = vscode.commands.registerCommand('arpirobot.createProject', createProject);
@@ -17,6 +20,13 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(updateDevEnvironmentCommand);
 
 	let createJavaProjectCommand = vscode.commands.registerCommand('arpirobot.createJavaProject', createJavaProj);
+	context.subscriptions.push(createJavaProjectCommand);
+
+	let buildJavaCommand = vscode.commands.registerCommand('arpirobot.gradlebuild', runGradleBuild);
+	context.subscriptions.push(buildJavaCommand);
+
+	let cleanJavaCommand = vscode.commands.registerCommand('arpirobot.gradleclean', runGradleClean);
+	context.subscriptions.push(cleanJavaCommand);
 
 	let openArPiRobotCommands = vscode.commands.registerCommand('arpirobot.openArPiRobotCommands', () => {
 		vscode.commands.executeCommand('workbench.action.quickOpen', '>ArPiRobot');
@@ -30,6 +40,12 @@ export function activate(context: vscode.ExtensionContext) {
 	sbitem.command = 'arpirobot.openArPiRobotCommands';
 	sbitem.text = "ArPiRobot";
 	sbitem.show();
+
+	vscode.window.onDidCloseTerminal((term) => {
+		if(term === terminal){
+			terminal = null;
+		}
+	});
 }
 
 export function deactivate() {
@@ -57,7 +73,7 @@ let cancelItem: vscode.QuickPickItem = {
 };
 
 
-const createProject = async() => {
+const createProject = async () => {
 
 	// Show input box asking for project name
 	let projName = await window.showInputBox(projectNameInputboxOpts);
@@ -110,7 +126,7 @@ const createProject = async() => {
 	vscode.commands.executeCommand("vscode.openFolder", vscode.Uri.file(filePath));
 };
 
-const createJavaProj = async() => {
+const createJavaProj = async () => {
 
 	// Show input box asking for project name
 	let projName = await window.showInputBox(projectNameInputboxOpts);
@@ -183,7 +199,7 @@ const updateSelectOptions: OpenDialogOptions = {
 	}
 };
 
-const updateDevEnv = async() => {
+const updateDevEnv = async () => {
 
 	// Make sure a python interpreter is selected
 	if(!vscode.workspace.getConfiguration().has("python.pythonPath")){
@@ -315,3 +331,37 @@ const startUpdate = async(pythonPath: string) => {
 		}
 	});
 };
+
+const openTerminalIfNeeded = (directory: string) => {
+	if(terminal == null){
+		terminal = vscode.window.createTerminal({
+			name: "ArPiRobot",
+			cwd: directory,
+			hideFromUser: false
+		});
+	}
+}
+
+const runGradleBuild = () => {
+	if(!vscode.workspace.rootPath){
+		vscode.window.showErrorMessage("Open a folder first!");
+		return;
+	}
+	openTerminalIfNeeded(vscode.workspace.rootPath);
+	if(terminal){
+		terminal.show();
+		terminal.sendText("." + path.sep + "gradlew jar\n"); 
+	}
+}
+
+const runGradleClean = () => {
+	if(!vscode.workspace.rootPath){
+		vscode.window.showErrorMessage("Open a folder first!");
+		return;
+	}
+	openTerminalIfNeeded(vscode.workspace.rootPath);
+	if(terminal){
+		terminal.show();
+		terminal.sendText("." + path.sep + "gradlew clean\n"); 
+	}
+}

@@ -26,6 +26,14 @@
 			{
 				"command": "arpirobot.createJavaProject",
 				"title": "ArPiRobot - Create JavaLibProject"
+			},
+			{
+				"command": "arpirobot.gradlebuild",
+				"title": "ArPiRobot - Build JavaLib Project"
+			},
+			{
+				"command": "arpirobot.gradleclean",
+				"title": "ArPiRobot - Clean JavaLib Project"
 			}
 		]
 	},
