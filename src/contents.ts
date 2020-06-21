@@ -1,3 +1,27 @@
+/*
+ * Copyright 2020 Marcus Behel
+ * 
+ * This file is part of ArPiRobot-VSCodeExtension.
+ * 
+ * ArPiRobot-VSCodeExtension is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * ArPiRobot-VSCodeExtension is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with ArPiRobot-VSCodeExtension.  If not, see <https://www.gnu.org/licenses/>.
+ * 
+ * Note that this copyright and license do not apply to third party programs/files embedded into this file.
+ * Each is distributed in accordance with its license
+ * 
+ * This license and copyright also do not necessarily apply to the content stored in this file
+ * to be used in project generation. Each generated file may be under its own license.
+ */
 
 // Python Project Template Files
 export const robot_py: string = "\nfrom arpirobot.core.log import Logger\nfrom arpirobot.core.robot import BaseRobot\n\nimport robot_actions\nimport robot_objects\n\n\nclass Robot(BaseRobot):\n    def robot_started(self):\n        # Configure devices (motors, Arduinos, sensors, etc)\n        # Setup event callbacks here if in use\n        # Start Action's if needed here\n        pass\n\n\n    def robot_enabled(self):\n        # Run once each time the robot becomes enabled\n        pass\n\n    def robot_disabled(self):\n        # Runs once each time the robot becomes disabled\n        pass\n\n    def periodic(self):\n        # Always make sure to feed the watchdog to make sure devices don't get disabled\n        self.feed_watchdog()\n    \n    def enabled_periodic(self):\n        # Runs periodically while robot is enabled\n        pass\n\n    def disabled_periodic(self):\n        # Runs periodically while robot is disabled\n        pass\n";
