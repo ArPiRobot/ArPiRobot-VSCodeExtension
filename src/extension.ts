@@ -131,15 +131,12 @@ const createProject = async () => {
 
 	// Create folders
 	fs.mkdirSync(filePath);
-	fs.mkdirSync(path.join(filePath, ".vscode"));
 
 	// Write files
 	fs.writeFileSync(path.join(filePath, "robot.py"), contents.robot_py);
-	fs.writeFileSync(path.join(filePath, "robot_objects.py"), contents.robot_objects_py);
-	fs.writeFileSync(path.join(filePath, "robot_actions.py"), contents.robot_actions_py);
+	fs.writeFileSync(path.join(filePath, "actions.py"), contents.actions_py);
 	fs.writeFileSync(path.join(filePath, "main.sh"), contents.main_sh);
 	fs.writeFileSync(path.join(filePath, "main.py"), contents.main_py);
-	fs.writeFileSync(path.join(filePath, ".vscode", "settings.json"), contents.vscode_settings_json);
 
 	// Open created project
 	vscode.commands.executeCommand("vscode.openFolder", vscode.Uri.file(filePath));
@@ -329,7 +326,7 @@ const startUpdate = async(pythonPath: string) => {
 							}
 							progress.report({message: "Done"});
 							// Finished install
-							resolve();
+							resolve(null);
 						});
 					});
 				});
