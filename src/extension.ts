@@ -26,6 +26,7 @@ import { OpenDialogOptions, Uri, window } from "vscode";
 
 let sbitem: vscode.StatusBarItem;
 let logOutput = vscode.window.createOutputChannel("ArPiRobot");
+let templatePath = "";
 
 export function activate(context: vscode.ExtensionContext) {
 	let createProjectCommand = vscode.commands.registerCommand('arpirobot.createProject', createProject);
@@ -43,6 +44,11 @@ export function activate(context: vscode.ExtensionContext) {
 	sbitem.command = 'arpirobot.openArPiRobotCommands';
 	sbitem.text = "ArPiRobot";
 	sbitem.show();
+
+	templatePath = __dirname + "/templates";
+	if(!fs.existsSync(templatePath)){
+		templatePath = __dirname + "/../templates"; // Work when debugging via vscode
+	}
 }
 
 export function deactivate() {
@@ -59,9 +65,7 @@ export async function createProject(){
 	if(homedir == undefined){
 		homedir = "";
 	}
-	let templatePath = path.join(homedir, ".arpirobot/proj_templates");
 	if(!fs.existsSync(templatePath)){
-		window.showErrorMessage("No project templates found. Install templates using the deploy tool first.");
 		return;
 	}
 
