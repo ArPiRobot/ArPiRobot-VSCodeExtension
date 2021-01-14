@@ -1,7 +1,0 @@
-{
-    "python.analysis.extraPaths": [
-        "${env:UserProfile}/.arpirobot/corelib/python_bindings",
-        "${env:HOME}/.arpirobot/corelib/python_bindings"
-    ],
-    "python.languageServer": "Pylance"
-}
