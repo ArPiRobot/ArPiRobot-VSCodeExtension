@@ -1,0 +1,32 @@
+plugins {
+    id 'application'
+}
+
+application {
+    mainClass = 'robot.Main'
+}
+
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation fileTree(dir: System.properties['user.home'] + "/.arpirobot/corelib/java_bindings", include: ['*.jar'])
+}
+
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'robot.Main'
+        attributes "Class-Path": configurations.runtimeClasspath.files.collect { it.getName() }.join(' ')
+    }
+    archiveBaseName = 'robot'
+}
+
+distZip.enabled = false
+distTar.enabled = false

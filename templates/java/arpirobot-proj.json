@@ -1,0 +1,11 @@
+{
+    "version": 1,
+    "deployFiles": [
+        "build/libs/robot.jar",
+        "main.sh"
+    ],
+    "coreLibFiles": [
+        "lib/libarpirobot-core.so",
+        "java_bindings/*.jar"
+    ]
+}
