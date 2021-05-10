@@ -2,7 +2,7 @@
 	"name": "arpirobot",
 	"displayName": "ArPiRobot",
 	"description": "VSCode Integration for ArPiRobot development",
-	"version": "0.1.3",
+	"version": "0.1.4",
 	"engines": {
 		"vscode": "^1.38.0"
 	},
@@ -41,10 +41,10 @@
 		"@types/vscode": "^1.38.0",
 		"glob": "^7.1.4",
 		"mocha": "^6.1.4",
-		"typescript": "^3.3.1",
+		"recursive-copy": "2.0.11",
 		"tslint": "^5.12.1",
-		"vscode-test": "^1.2.0",
-		"recursive-copy": "2.0.11"
+		"typescript": "^3.3.1",
+		"vscode-test": "^1.2.0"
 	},
 	"publisher": "marcusbehel"
 }
