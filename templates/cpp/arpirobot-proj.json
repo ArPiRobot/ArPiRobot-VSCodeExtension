@@ -5,6 +5,6 @@
         "main.sh"
     ],
     "coreLibFiles": [
-        "lib/libarpirobot-core.so"
+        "lib/*.so"
     ]
 }
