@@ -2,6 +2,8 @@
 
 #include <arpirobot/core/robot/BaseRobot.hpp>
 
+#include <actions.hpp>
+
 // Other includes (for devices and other objects) here
 
 
