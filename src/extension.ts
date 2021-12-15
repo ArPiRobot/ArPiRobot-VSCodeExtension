@@ -21,7 +21,7 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as util from "util";
-let copy = require('recursive-copy');
+const fse = require('fs-extra');
 import { OpenDialogOptions, Uri, window } from "vscode";
 
 let sbitem: vscode.StatusBarItem;
@@ -115,7 +115,7 @@ export async function createProject(){
 		fs.mkdirSync(projPath);
 	
 		// Copy files from template to proj folder
-		copy(templateFolder, projPath);
+		fse.copySync(templateFolder, projPath);
 
 		// Open folder
 		vscode.commands.executeCommand("vscode.openFolder", vscode.Uri.file(projPath));

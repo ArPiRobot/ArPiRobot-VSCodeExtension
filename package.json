@@ -32,7 +32,7 @@
 		"test": "node ./out/test/runTest.js"
 	},
 	"dependencies": {
-		"recursive-copy": "2.0.11"
+		"fs-extra": "^10.0.0"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
