@@ -1,9 +1,9 @@
 #include <robot.hpp>
 #include <actions.hpp>
 
-#include <arpirobot/core/log.hpp>
-#include <arpirobot/core/action.hpp>
-#include <arpirobot/core/network.hpp>
+#include <arpirobot/core/log/Logger.hpp>
+#include <arpirobot/core/action/ActionManager.hpp>
+#include <arpirobot/core/network/NetworkTable.hpp>
 
 using namespace arpirobot;
 

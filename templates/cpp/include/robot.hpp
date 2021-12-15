@@ -1,6 +1,6 @@
 #pragma once
 
-#include <arpirobot/core/robot.hpp>
+#include <arpirobot/core/robot/BaseRobot.hpp>
 
 // Other includes (for devices and other objects) here
 
