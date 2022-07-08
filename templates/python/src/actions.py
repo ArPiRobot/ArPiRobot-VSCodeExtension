@@ -1,20 +1,30 @@
-from arpirobot.core.action import Action
+from arpirobot.core.action import Action, LockedDeviceList
 from arpirobot.core.log import Logger
 import main
 
 
 # Create actions here
 # Each action must have 4 functions. Use the template below.
+# An optional 5th function (locked_devices) is 
+# available if an action needs exclusive control of a device
+
 # You can refer to the current instance of your Robot class using main.robot
 
 """
 class MyAction(Action):
-    # You can define a custom constructor here (with arguments) if needed
-    # If you do so make sure the first line is super().__init__()
+    # Add arguments to the constructor if needed
+    def __init__(self):
+        # Make sure this is always the first line of the constructor
+        super().__init__()
+
+        # Store arguments as member variables here if necessary
+
+    def locked_devices(self) -> LockedDeviceList:
+        # If an action needs exclusive control of devices, lock them here
+        return []
 
     def begin(self):
         # Run when the action is started
-        # If an action needs exclusive control of devices, lock them here
         pass
 
     def process(self):
