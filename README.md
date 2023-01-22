@@ -1,4 +1,4 @@
-# arpirobot README
+# ArPiRobot VSCode Extension
 
 
 ## Packaging vsix

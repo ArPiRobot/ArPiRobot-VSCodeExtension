@@ -49,6 +49,16 @@ export function activate(context: vscode.ExtensionContext) {
 	if(!fs.existsSync(templatePath)){
 		templatePath = __dirname + "/../templates"; // Work when debugging via vscode
 	}
+
+	// Register handler for changes to workspace folders
+	vscode.workspace.onDidChangeWorkspaceFolders(handleWorkspaceFolderChange)
+
+	// Some folders may already be open. Need to generate env file for these too
+	if(vscode.workspace.workspaceFolders){
+		for(let folder of vscode.workspace.workspaceFolders){
+			folderOpened(folder)
+		}
+	}
 }
 
 export function deactivate() {
@@ -120,4 +130,34 @@ export async function createProject(){
 		// Open folder
 		vscode.commands.executeCommand("vscode.openFolder", vscode.Uri.file(projPath));
 	}
+}
+
+export function handleWorkspaceFolderChange(event: vscode.WorkspaceFoldersChangeEvent){
+	for(let folder of event.added){
+		folderOpened(folder);
+	}
+}
+
+export function folderOpened(folder: vscode.WorkspaceFolder){
+	// If new folder has arpirobot-proj.json, it is an arpirobot project
+	// If src/main.py exists, generate an env file with the required pythonpath
+	// addition for the current dev system
+	if(!fs.existsSync(folder.uri.fsPath + "/arpirobot-proj.json")){
+		console.log("A");
+		return; // Not ArPiRobot project
+	}
+	if(!fs.existsSync(folder.uri.fsPath + "/src/main.py")){
+		console.log("B");
+		return; // Not python project
+	}
+	console.log("C");
+
+	// This is a python arpirobot project. Generate an env file
+	var contents = "";
+	if(process.platform === "win32"){
+		contents = "PYTHONPATH=${USERPROFILE}/.arpirobot/corelib/python_bindings;${PYTHONPATH}";
+	}else{
+		contents = "PYTHONPATH=${HOME}/.arpirobot/corelib/python_bindings:${PYTHONPATH}";
+	}
+	fs.writeFileSync(folder.uri.fsPath + "/.env", contents);
 }
