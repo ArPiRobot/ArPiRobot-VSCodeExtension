@@ -2,7 +2,11 @@
 	"name": "arpirobot",
 	"displayName": "ArPiRobot",
 	"description": "VSCode Integration for ArPiRobot development",
-	"version": "0.2.0",
+	"version": "1.0.0-rc1",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ArPiRobot/ArPiRobot-VSCodeExtension"
+	},
 	"engines": {
 		"vscode": "^1.38.0"
 	},
