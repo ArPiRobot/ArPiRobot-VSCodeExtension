@@ -10,9 +10,9 @@ cd $DIR
 
 arch=$(binarch ./robot)
 if [ "$arch" = "ARM" ]; then
-    sudo LD_LIBRARY_PATH=./armv6:$LD_LIBRARY_PATH ./robot
+    sudo -E LD_LIBRARY_PATH=./armv6:$LD_LIBRARY_PATH ./robot
 elif [ "$arch" = "AArch64" ]; then
-    sudo LD_LIBRARY_PATH=./aarch64:$LD_LIBRARY_PATH ./robot
+    sudo -E LD_LIBRARY_PATH=./aarch64:$LD_LIBRARY_PATH ./robot
 else
     echo "Unknown architecture. Cannot run robot program!"
 fi
