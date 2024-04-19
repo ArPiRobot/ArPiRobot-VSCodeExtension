@@ -16,6 +16,9 @@ public:
     // Run when the robot starts
     void robotStarted();
 
+    // Run when the robot stops
+    void robotStopped();
+
     // Runs once each time the robot becomes enabled
     void robotEnabled();
 

@@ -11,6 +11,10 @@ void Robot::robotStarted(){
     // Configure devices here
 }
 
+void Robot::robotStopped(){
+
+}
+
 void Robot::robotEnabled(){
 
 }

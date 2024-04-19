@@ -23,6 +23,10 @@ class Robot(BaseRobot):
         # Configure devices here
         pass
 
+    def robot_stopped(self):
+        # Run once when the robot stops
+        pass
+
     def robot_enabled(self):
         # Runs once each time the robot becomes enabled
         pass
