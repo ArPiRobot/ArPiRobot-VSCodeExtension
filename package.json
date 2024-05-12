@@ -28,7 +28,7 @@
 			},
 			{
 				"command": "arpirobot.recreatePythonEnv",
-				"title": "ArPiRobot- Recreate Python Environment"
+				"title": "ArPiRobot - Create Python Environment"
 			}
 		]
 	},

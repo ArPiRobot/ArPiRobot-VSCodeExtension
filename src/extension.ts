@@ -151,7 +151,7 @@ export function folderOpened(folder: vscode.WorkspaceFolder){
 	createPythonEnvironment(folder, false)
 }
 
-export function createPythonEnvironment(folder: vscode.WorkspaceFolder, force: boolean){
+export async function createPythonEnvironment(folder: vscode.WorkspaceFolder, force: boolean){
 	// If new folder has arpirobot-proj.json, it is an arpirobot project
 	// If src/main.py exists, generate an env file with the required pythonpath
 	// addition for the current dev system
@@ -163,15 +163,14 @@ export function createPythonEnvironment(folder: vscode.WorkspaceFolder, force: b
 	}
 
 	// This is a python arpirobot project
-	if(force && fs.existsSync(folder.uri.fsPath + "/.venv")){
-		// force causes old venv to be deleted and recreated if one exists
-		deleteFolderRecursive(folder.uri.fsPath + "/.venv")
-	}
-	if(!fs.existsSync(folder.uri.fsPath + "/.venv")){
-		vscode.commands.executeCommand("python.createEnvironment", {
+
+	if(force || !fs.existsSync(folder.uri.fsPath + "/.venv")){
+		await vscode.commands.executeCommand("python.createEnvironment", {
 			providerId: "ms-python.python:venv"
 		});
 	}
+
+	await vscode.commands.executeCommand("python.analysis.restartLanguageServer")
 }
 
 // https://stackoverflow.com/questions/18052762/remove-directory-which-is-not-empty/57866165#57866165
