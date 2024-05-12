@@ -25,6 +25,10 @@
 			{
 				"command": "arpirobot.createProject",
 				"title": "ArPiRobot - Create ArPiRobot Project"
+			},
+			{
+				"command": "arpirobot.recreatePythonEnv",
+				"title": "ArPiRobot- Recreate Python Environment"
 			}
 		]
 	},
@@ -36,7 +40,7 @@
 		"test": "node ./out/test/runTest.js"
 	},
 	"dependencies": {
-		"fs-extra": "^10.0.0"
+		"fs-extra": "^11.2.0"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
