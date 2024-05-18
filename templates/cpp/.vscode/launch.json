@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "custom",
+            "name": "Attach Remote",
+            "targetCreateCommands": [
+                "target create ${workspaceFolder}/build/${command:cmake.activeConfigurePresetName}/robot"
+            ],
+            "processCreateCommands": [
+                "gdb-remote 192.168.10.1:2000",
+                "shell sleep 1",
+                "c"
+            ],
+            "windows": {
+                "processCreateCommands": [
+                    "gdb-remote 192.168.10.1:2000",
+                    "shell waitfor /t 1 pause",
+                    "c"
+                ]
+            }
+        }
+    ]
+}

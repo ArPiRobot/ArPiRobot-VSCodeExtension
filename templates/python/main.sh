@@ -8,11 +8,18 @@ DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 cd $DIR
 
 
-arch=$(binarch $(which python3))
+
+arch=$(binarch ./robot)
 if [ "$arch" = "ARM" ]; then
-    sudo -E LD_LIBRARY_PATH=./armv6:$LD_LIBRARY_PATH PYTHONPATH=. python3 -u main.py
+    LD_LIB_PATH_NEW=./armv6:$LD_LIBRARY_PATH ./robot
 elif [ "$arch" = "AArch64" ]; then
-    sudo -E LD_LIBRARY_PATH=./aarch64:$LD_LIBRARY_PATH PYTHONPATH=. python3 -u main.py
+    LD_LIB_PATH_NEW=./aarch64:$LD_LIBRARY_PATH ./robot
 else
     echo "Unknown architecture. Cannot run robot program!"
+fi
+
+if [ "$1" = "--debug" ]; then
+    sudo -E LD_LIBRARY_PATH=$LD_LIB_PATH_NEW python3 -u -Xfrozen_modules=off -m debugpy --listen 0.0.0.0:2000 --wait-for-client main.py
+else
+    sudo -E LD_LIBRARY_PATH=$LD_LIB_PATH_NEW PYTHONPATH=. python3 -u main.py
 fi
