@@ -11,9 +11,9 @@ cd $DIR
 
 arch=$(binarch ./robot)
 if [ "$arch" = "ARM" ]; then
-    LD_LIB_PATH_NEW=./armv6:$LD_LIBRARY_PATH ./robot
+    LD_LIB_PATH_NEW=./armv6:$LD_LIBRARY_PATH
 elif [ "$arch" = "AArch64" ]; then
-    LD_LIB_PATH_NEW=./aarch64:$LD_LIBRARY_PATH ./robot
+    LD_LIB_PATH_NEW=./aarch64:$LD_LIBRARY_PATH
 else
     echo "Unknown architecture. Cannot run robot program!"
 fi

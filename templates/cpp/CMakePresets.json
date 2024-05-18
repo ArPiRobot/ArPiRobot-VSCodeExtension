@@ -7,27 +7,58 @@
     },
     "configurePresets": [
         {
-            "name": "armv6",
-            "displayName": "armv6",
+            "name": "armv6-debug",
+            "displayName": "armv6 (Debug)",
             "description": "Targeting armv6 systems",
-            "generator": "Ninja Multi-Config",
-            "binaryDir": "${sourceDir}/build/armv6",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/",
             "cacheVariables": {
                 "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/arpirobot-armv6-toolchain.cmake",
-                "CMAKE_BUILD_WITH_INSTALL_RPATH": "ON"
+                "CMAKE_BUILD_WITH_INSTALL_RPATH": "ON",
+                "CMAKE_BUILD_TYPE": "Debug"
             },
             "environment": {},
             "vendor": {}
         },
         {
-            "name": "aarch64",
-            "displayName": "aarch64",
+            "name": "armv6-release",
+            "displayName": "armv6 (Release)",
+            "description": "Targeting armv6 systems",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/",
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/arpirobot-armv6-toolchain.cmake",
+                "CMAKE_BUILD_WITH_INSTALL_RPATH": "ON",
+                "CMAKE_BUILD_TYPE": "Release"
+            },
+            "environment": {},
+            "vendor": {}
+        },
+        
+        {
+            "name": "aarch64-debug",
+            "displayName": "aarch64 (Debug)",
             "description": "Targeting aarch64 systems",
-            "generator": "Ninja Multi-Config",
-            "binaryDir": "${sourceDir}/build/aarch64",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/",
             "cacheVariables": {
                 "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/arpirobot-aarch64-toolchain.cmake",
-                "CMAKE_BUILD_WITH_INSTALL_RPATH": "ON"
+                "CMAKE_BUILD_WITH_INSTALL_RPATH": "ON",
+                "CMAKE_BUILD_TYPE": "Debug"
+            },
+            "environment": {},
+            "vendor": {}
+        },
+        {
+            "name": "aarch64-release",
+            "displayName": "aarch64 (Release)",
+            "description": "Targeting aarch64 systems",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/",
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/arpirobot-aarch64-toolchain.cmake",
+                "CMAKE_BUILD_WITH_INSTALL_RPATH": "ON",
+                "CMAKE_BUILD_TYPE": "Release"
             },
             "environment": {},
             "vendor": {}
@@ -36,52 +67,24 @@
     "buildPresets": [
         {
             "name": "armv6-debug",
-            "displayName": "Debug",
-            "configurePreset": "armv6",
-            "configuration": "Debug"
+            "displayName": "armv6 (Debug)",
+            "configurePreset": "armv6-debug"
         },
         {
             "name": "armv6-release",
-            "displayName": "Release",
-            "configurePreset": "armv6",
-            "configuration": "Release"
-        },
-        {
-            "name": "armv6-minsizerel",
-            "displayName": "MinSizeRel",
-            "configurePreset": "armv6",
-            "configuration": "MinSizeRel"
-        },
-        {
-            "name": "armv6-relwithdebinfo",
-            "displayName": "RelWithDebInfo",
-            "configurePreset": "armv6",
-            "configuration": "RelWithDebInfo"
+            "displayName": "armv6 (Release)",
+            "configurePreset": "armv6-release"
         },
 
         {
             "name": "aarch64-debug",
-            "displayName": "Debug",
-            "configurePreset": "aarch64",
-            "configuration": "Debug"
+            "displayName": "aarch64 (Debug)",
+            "configurePreset": "aarch64-debug"
         },
         {
             "name": "aarch64-release",
-            "displayName": "Release",
-            "configurePreset": "aarch64",
-            "configuration": "Release"
-        },
-        {
-            "name": "aarch64-minsizerel",
-            "displayName": "MinSizeRel",
-            "configurePreset": "aarch64",
-            "configuration": "MinSizeRel"
-        },
-        {
-            "name": "aarch64-relwithdebinfo",
-            "displayName": "RelWithDebInfo",
-            "configurePreset": "aarch64",
-            "configuration": "RelWithDebInfo"
+            "displayName": "aarch64 (Release)",
+            "configurePreset": "aarch64-release"
         }
     ]
 }

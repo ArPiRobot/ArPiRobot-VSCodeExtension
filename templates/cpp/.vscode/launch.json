@@ -9,7 +9,7 @@
             "request": "custom",
             "name": "Attach Remote",
             "targetCreateCommands": [
-                "target create ${workspaceFolder}/build/${command:cmake.activeConfigurePresetName}/robot"
+                "target create ${workspaceFolder}/build/robot"
             ],
             "processCreateCommands": [
                 "gdb-remote 192.168.10.1:2000",
