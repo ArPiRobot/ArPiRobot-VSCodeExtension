@@ -5,24 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "lldb",
-            "request": "custom",
+            "type": "lldb-dap",
+            "request": "attach",
             "name": "Attach Remote",
-            "targetCreateCommands": [
-                "target create ${workspaceFolder}/build/robot"
-            ],
-            "processCreateCommands": [
+            "program": "${workspaceFolder}/build/robot",
+            "attachCommands": [
                 "gdb-remote 192.168.10.1:2000",
-                "shell sleep 1",
-                "c"
-            ],
-            "windows": {
-                "processCreateCommands": [
-                    "gdb-remote 192.168.10.1:2000",
-                    "shell waitfor /t 1 pause",
-                    "c"
-                ]
-            }
+                "b main"
+            ]
         }
     ]
 }

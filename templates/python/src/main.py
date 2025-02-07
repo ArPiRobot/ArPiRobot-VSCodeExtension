@@ -1,3 +1,17 @@
+# If running under debugger, pause at entry
+try:
+    import sys
+    has_trace = hasattr(sys, 'gettrace') and sys.gettrace() is not None
+    has_breakpoint = sys.breakpointhook.__module__ != "sys"
+    is_debug = has_trace or has_breakpoint
+    if is_debug:
+        # Running under debugger
+        import debugpy
+        debugpy.breakpoint()
+except:
+    # debugpy probably not installed
+    pass
+
 robot: 'robot_mod.Robot' = None
 
 import robot as robot_mod
