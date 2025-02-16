@@ -18,6 +18,10 @@
 	],
 	"main": "./out/extension.js",
 	"files": [
+		"node_modules/fs-extra/",
+		"node_modules/graceful-fs/",
+		"node_modules/jsonfile/",
+		"node_modules/universalify/",
 		"templates/",
 		"out/extension.js",
 		"LICENSE",
